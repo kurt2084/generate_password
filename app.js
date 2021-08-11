@@ -3,6 +3,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+const generatePassword = require('./generate_password')
 const app = express()
 const port = 3000
 
@@ -19,8 +20,10 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-  console.log('req.body', req.body)
-  res.render('index')
+  const options = req.body
+  const password = generatePassword(options)
+  res.render('index', { password: password, options: options })
+
 })
 
 // starts the express server and listening for connection
